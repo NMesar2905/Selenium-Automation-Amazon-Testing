@@ -3,6 +3,7 @@ package com.amazon.pageclases;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,11 +31,8 @@ public class SearchResultPage extends BasePage{
 		String productPrice = null;
 		String productName = getProductName(productSelection);
 		try {
-			WebElement product = searchProductResults.get(productSelection - 1);
-			List<WebElement> productPriceElement = product.findElements(By.xpath("//span[@class='a-offscreen']"));
 			logger.log(Status.INFO, "Verifying price of Product: " + productSelection + "'");
-//			productPrice = productPriceElement.get(0).getText();
-			productPrice = productPriceElement.get(0).getAttribute("innerText");
+			productPrice = getProductPriceElement(productSelection).getAttribute("innerText");
 			logger.log(Status.PASS, "The price of the product: '" + productName + "' is: '" + productPrice + "'");
 		} catch (Exception e) {
 			reportFail(e.getMessage());
@@ -55,6 +53,30 @@ public class SearchResultPage extends BasePage{
 			reportFail(e.getMessage());
 		}
 		return productName;
+	}
+	
+	public ProductPage clickProductPrice(int productSelection) {
+		try {
+			logger.log(Status.INFO, "Clicking product price number: '" + productSelection + "'");
+			
+			WebElement productPrice = getProductPriceElement(productSelection);
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", productPrice);
+			
+			logger.log(Status.PASS, "Clicked product price");
+		} catch (Exception e) {
+			reportFail(e.getMessage());
+		}
+		ProductPage productPage = new ProductPage(driver, logger);
+		PageFactory.initElements(driver, productPage);
+		return productPage;
+	}
+	
+	private WebElement getProductPriceElement(int productSelection) {
+		WebElement product = searchProductResults.get(productSelection - 1);
+		List<WebElement> productPriceElement = product.findElements(By.xpath("//span[@class='a-offscreen']"));
+		WebElement productPrice = productPriceElement.get(0);
+		return productPrice;
 	}
 	
 	

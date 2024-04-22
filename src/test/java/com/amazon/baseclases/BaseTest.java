@@ -1,8 +1,10 @@
 package com.amazon.baseclases;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,6 +16,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 
+import com.amazon.pageclases.HomePage;
+import com.amazon.pageclases.ProductPage;
+import com.amazon.pageclases.SearchResultPage;
 import com.amazon.utilities.DateUtils;
 import com.amazon.utilities.ExtentReportManager;
 import com.aventstack.extentreports.ExtentReports;
@@ -21,12 +26,30 @@ import com.aventstack.extentreports.ExtentTest;
 
 
 public class BaseTest {
+	
+	public static HomePage homePage;
+	public static TopMenuClass topMenu;
+	public static SearchResultPage searchResultPage;
+	public static ProductPage productPage;
 
 	public WebDriver driver;
 
 	public ExtentReports report = ExtentReportManager.getReportInstance();
 
 	public ExtentTest logger;
+	
+	public static Properties prop;
+
+	public BaseTest() {
+		prop = new Properties();
+		try {
+			FileInputStream fis = new FileInputStream(
+					System.getProperty("user.dir") + "\\src\\test\\java\\com\\amazon\\config\\config.properties");
+			prop.load(fis);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/****************** Invoke Browser ***********************/
 	public void invokeBrowser(String browserName) {
