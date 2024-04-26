@@ -1,17 +1,25 @@
 package com.amazon.baseclases;
 
+import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.amazon.pageclases.HomePage;
 import com.amazon.pageclases.SearchResultPage;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class TopMenuClass extends BasePage {
@@ -32,7 +40,74 @@ public class TopMenuClass extends BasePage {
 	@FindBy(id = "nav-search-submit-button")
 	public WebElement searchButton;
 	
+	@FindBy(id = "nav-hamburger-menu")
+	public WebElement hamburguerButton;
+	
+	@FindBy(xpath = "//*[@data-menu-id='1']")
+	public WebElement hamburguerOptions;
+	
 	private String suggestionText;
+	
+	public Map<String, List<String>> getHamburguerOptions() {
+		Map<String, List<String>> categoriesAndOptions = null;
+		try {
+		hamburguerButton.click();
+		waitLoad(2);
+		System.out.println("GETTEXT(): "+hamburguerOptions.getText());
+		logger.log(Status.INFO, "Getting Categories and Sub Categories from Hamburger Menu");
+		String[] hamburgerOptionsList = hamburguerOptions.getText().split("\n");
+		String key=null;
+		List<String> categoryOptions = new ArrayList<String>();
+		
+		categoriesAndOptions = new HashMap<String, List<String>>();
+		for (int i = 0; i < hamburgerOptionsList.length-1; i++) {
+
+			if(hamburgerOptionsList[i].equalsIgnoreCase("Tendencias")
+					||hamburgerOptionsList[i].equalsIgnoreCase("Contenido y dispositivos digitales")
+					||hamburgerOptionsList[i].equalsIgnoreCase("Buscar por categoría")
+					||hamburgerOptionsList[i].equalsIgnoreCase("Programas y características")
+					||hamburgerOptionsList[i].equalsIgnoreCase("Ayuda y configuración")) {
+				categoriesAndOptions.put(key, categoryOptions);
+				categoryOptions = new ArrayList<String>();
+				key = hamburgerOptionsList[i];
+			}else {
+				categoryOptions.add(hamburgerOptionsList[i]);
+			}
+		}
+			categoriesAndOptions.remove(null);
+			logger.log(Status.PASS, "Created Map of Categories And Subcategories, the map is: " + categoriesAndOptions);
+		}catch(Exception e) {
+			reportFail(e.getMessage());
+		}
+		
+		return categoriesAndOptions;
+	}
+	
+	
+	public void verifyCategoryAndOptions(File jsonFile, Map<String, List<String>> categoriesAndOptions) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			Map<String, List<String>> expectedCategoryAndOptions = objectMapper.readValue(jsonFile, Map.class);
+			logger.log(Status.INFO, "The expected Specific Category Map is: '" + expectedCategoryAndOptions + "'");
+			
+			String categoryToCompare =  List.copyOf(expectedCategoryAndOptions.keySet()).get(0);
+			
+			logger.log(Status.INFO, "Category to compare is: " + categoryToCompare);
+			
+			logger.log(Status.INFO, "Getting Actual Map of the specific Category: " + categoryToCompare);
+			Map<String, List<String>> actualCategoryAndOptions = new HashMap<String, List<String>>();
+			actualCategoryAndOptions.put(categoryToCompare, categoriesAndOptions.get(categoryToCompare));
+			logger.log(Status.PASS, "Created Actual Map of specific Category: " + actualCategoryAndOptions);
+			
+			logger.log(Status.INFO, "Checking Actual Category Map and Expected Category Map");
+			Assert.assertTrue(actualCategoryAndOptions.equals(expectedCategoryAndOptions));
+			logger.log(Status.PASS, "The Actual Category Map is: '"+actualCategoryAndOptions+"'"+"\n"
+					+"and the Expected Catergory Map is: '" + expectedCategoryAndOptions+ "'");
+			
+		} catch (Exception e) {
+			reportFail(e.getMessage());
+		}
+	}
 	
 	public HomePage clickHomeBtn() {
 		logger.log(Status.INFO, "Clicking the Amazon Logo (Home)");
@@ -96,6 +171,11 @@ public class TopMenuClass extends BasePage {
 		PageFactory.initElements(driver, searchResultPage);
 		return searchResultPage;
 	}
+
+
+
+
+
 
 
 }

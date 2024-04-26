@@ -5,9 +5,8 @@
     <classes>
       <class name="com.amazon.testclases.AmazonTests">
         <methods>
-          <include name="searchProductBySuggestion"/>
           <include name="flushReports"/>
-          <include name="searchProductByButton"/>
+          <include name="hamburgerTest"/>
         </methods>
       </class> <!-- com.amazon.testclases.AmazonTests -->
     </classes>

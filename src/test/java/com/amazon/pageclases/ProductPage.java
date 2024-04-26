@@ -29,18 +29,6 @@ public class ProductPage extends BasePage{
 		PageFactory.initElements(driver, topMenu);
 	}
 	
-//	@FindBy(xpath = "//div[@id='corePriceDisplay_desktop_feature_div']//span[@class='aok-offscreen']")
-//	public WebElement productPriceValueById;
-//	
-//	@FindBy(xpath = "//td[text()='Precio:' or text()='Price:']/../td[2]/span/span[@class='a-offscreen']")
-//	public List<WebElement> productPriceValueByXpath;
-	
-//	@FindBy(xpath = "//*[contains(text(),'US$')]")
-//	public List<WebElement> productPriceElementsList;
-	
-//	@FindBy(xpath = "//*[contains(text(),'US$')]")
-//	public WebElement productPriceElementsList;
-	
 	@FindBy(id = "productTitle")
 	public List<WebElement> productNameElement;
 	
@@ -49,17 +37,12 @@ public class ProductPage extends BasePage{
 		String productPrice = null;
 		String productName = getProductName();
 		try {
-			WebElement productPriceElementsList = driver.findElement(By.xpath("//*[@class='a-section a-spacing-micro'][1]"));
-
-			System.out.println(productPriceElementsList.getAttribute("outerHTML"));
-			System.out.println("*************************************");
-			System.out.println(productPriceElementsList.getText());
-			
-	        logger.log(Status.INFO, "Verifying price in Product Page");
+			WebElement productPriceElementsList = driver.findElement(By.xpath("//*[@class='a-section a-spacing-micro'][1]"));	
+	        logger.log(Status.INFO, "Verifying price in Product Page");   
 	        
 	        productPrice = productPriceElementsList.getText().replace("\n", ".")
 	        												 .replace(",", "");
-
+	        
 			logger.log(Status.PASS, "The price of the product: '" + productName + "' in product page is: '" + productPrice + "'");
 		} catch (Exception e) {
 			reportFail(e.getMessage());

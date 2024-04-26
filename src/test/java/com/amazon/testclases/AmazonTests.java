@@ -1,5 +1,9 @@
 package com.amazon.testclases;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
@@ -20,7 +24,7 @@ public class AmazonTests extends BaseTest {
 	
 	SearchResultPage searchResultPage;
 	
-	@Test
+	//@Test
 	public void searchProductBySuggestion() {
 		logger = report.createTest("[TC-01] : Search Product by Suggestion");
 		invokeBrowser("Chrome");
@@ -35,7 +39,7 @@ public class AmazonTests extends BaseTest {
 		takeScreenShot();
 	}
 	
-	@Test
+	//@Test
 	public void searchProductByButton() {
 		logger = report.createTest("[TC-02] : Search Product by Search Button");
 		invokeBrowser("Chrome");
@@ -47,6 +51,24 @@ public class AmazonTests extends BaseTest {
 		topMenu.verifyTitlePage();
 		String productPrice = searchResultPage.getProductPrice(1);
 		System.out.println("The product price is: "+productPrice);
+		takeScreenShot();
+	}
+	
+	@Test
+	public void hamburgerTest() {
+		logger = report.createTest("[TC-03] : Comparing Hamburger Menu Category");
+		invokeBrowser("Chrome");
+		BasePage pageBase = new BasePage(driver, logger);
+		PageFactory.initElements(driver, pageBase);
+		homePage = pageBase.openApplication();
+		topMenu = homePage.getTopMenu();
+		Map<String,List<String>> categoriesAndOptions = topMenu.getHamburguerOptions();
+		
+		String buscarPorCategoriaJSONPath = prop.getProperty("BurcarPorCategoriaJSONPath").replace("${user.dir}", System.getProperty("user.dir"));
+		topMenu.verifyCategoryAndOptions(new File(buscarPorCategoriaJSONPath), categoriesAndOptions);
+		
+		String programasYCaracteristicasJSONPath = prop.getProperty("ProgramasYCaracteristicasJSONPath").replace("${user.dir}", System.getProperty("user.dir"));
+		topMenu.verifyCategoryAndOptions(new File(programasYCaracteristicasJSONPath), categoriesAndOptions);
 		takeScreenShot();
 	}
 

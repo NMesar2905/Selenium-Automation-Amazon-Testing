@@ -29,3 +29,16 @@ Feature: Amazon UI Testing
       | Macbook Air 			| 1	    	 | 1						 |
       | Iphone 15 Pro Max |	3				 | 4             |
       | NVIDIA RTX 4060   | 5  			 | 2             |
+      
+ @Exercise3
+	Scenario Outline: Check Amazon Hambuger Menu Categories
+		Given The name of the test "Cucumber Test 3: Check Amazon Hamburger Menu Categories"
+    And User is on Amazon Landing Page
+    When Click the hamburger menu and Get menu categories and subcategories
+    Then Compare the Category using "BurcarPorCategoriaJSONPath"
+    And Compare the Category using "ProgramasYCaracteristicasJSONPath"
+    
+    
+    
+    
+    

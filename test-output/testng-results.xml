@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-04-17T12:46:09 COT" name="Default suite" finished-at="2024-04-17T12:46:38 COT" duration-ms="29296">
+  <suite started-at="2024-04-23T13:09:39 COT" name="Default suite" finished-at="2024-04-23T13:09:50 COT" duration-ms="11153">
     <groups>
     </groups>
-    <test started-at="2024-04-17T12:46:09 COT" name="Default test" finished-at="2024-04-17T12:46:38 COT" duration-ms="29296">
+    <test started-at="2024-04-23T13:09:39 COT" name="Default test" finished-at="2024-04-23T13:09:50 COT" duration-ms="11153">
       <class name="com.amazon.testclases.AmazonTests">
-        <test-method signature="searchProductByButton()[pri:0, instance:com.amazon.testclases.AmazonTests@6d5620ce]" started-at="2024-04-17T12:46:09 COT" name="searchProductByButton" finished-at="2024-04-17T12:46:22 COT" duration-ms="13222" status="PASS">
+        <test-method signature="hamburgerTest()[pri:0, instance:com.amazon.testclases.AmazonTests@311bf055]" started-at="2024-04-23T13:09:39 COT" name="hamburgerTest" finished-at="2024-04-23T13:09:49 COT" duration-ms="10675" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- searchProductByButton -->
-        <test-method is-config="true" signature="flushReports()[pri:0, instance:com.amazon.testclases.AmazonTests@6d5620ce]" started-at="2024-04-17T12:46:22 COT" name="flushReports" finished-at="2024-04-17T12:46:22 COT" duration-ms="556" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- flushReports -->
-        <test-method signature="searchProductBySuggestion()[pri:0, instance:com.amazon.testclases.AmazonTests@6d5620ce]" started-at="2024-04-17T12:46:23 COT" name="searchProductBySuggestion" finished-at="2024-04-17T12:46:38 COT" duration-ms="15295" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- searchProductBySuggestion -->
-        <test-method is-config="true" signature="flushReports()[pri:0, instance:com.amazon.testclases.AmazonTests@6d5620ce]" started-at="2024-04-17T12:46:38 COT" name="flushReports" finished-at="2024-04-17T12:46:38 COT" duration-ms="181" status="PASS">
+        </test-method> <!-- hamburgerTest -->
+        <test-method is-config="true" signature="flushReports()[pri:0, instance:com.amazon.testclases.AmazonTests@311bf055]" started-at="2024-04-23T13:09:49 COT" name="flushReports" finished-at="2024-04-23T13:09:50 COT" duration-ms="441" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- flushReports -->

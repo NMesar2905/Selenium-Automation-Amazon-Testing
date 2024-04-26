@@ -37,7 +37,7 @@ public class BasePage extends BaseTest {
 	/****************** Open Application ***********************/
 	public HomePage openApplication() {
 		logger.log(Status.INFO, "Opening the Amazon Web Page");
-		driver.get(prop.getProperty("ApplicationURL"));
+		driver.get(prop.getProperty("amazon-mexico"));
 		logger.log(Status.PASS, "Succesfully Opened the "+prop.getProperty("ApplicationURL"));
 		HomePage landingPage = new HomePage(driver, logger);
 		PageFactory.initElements(driver, landingPage);
