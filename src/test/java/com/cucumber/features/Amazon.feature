@@ -37,6 +37,14 @@ Feature: Amazon UI Testing
     When Click the hamburger menu and Get menu categories and subcategories
     Then Compare the Category using "BurcarPorCategoriaJSONPath"
     And Compare the Category using "ProgramasYCaracteristicasJSONPath"
+
+	@Exercise3
+	Scenario Outline: Check Amazon Hambuger Menu Categories with Error
+		Given The name of the test "Cucumber Test 4: Check Amazon Hamburger Menu Categories with Error"
+    And User is on Amazon Landing Page
+    When Click the hamburger menu and Get menu categories and subcategories
+    Then Compare the Category using "BurcarPorCategoriaJSONPathERROR"
+   
     
     
     

@@ -1,7 +1,8 @@
 package com.amazon.baseclases;
 
+
 import java.io.File;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,35 +52,38 @@ public class TopMenuClass extends BasePage {
 	public Map<String, List<String>> getHamburguerOptions() {
 		Map<String, List<String>> categoriesAndOptions = null;
 		try {
-		hamburguerButton.click();
-		waitLoad(2);
-		System.out.println("GETTEXT(): "+hamburguerOptions.getText());
-		logger.log(Status.INFO, "Getting Categories and Sub Categories from Hamburger Menu");
-		String[] hamburgerOptionsList = hamburguerOptions.getText().split("\n");
-		String key=null;
-		List<String> categoryOptions = new ArrayList<String>();
-		
-		categoriesAndOptions = new HashMap<String, List<String>>();
-		for (int i = 0; i < hamburgerOptionsList.length-1; i++) {
+			hamburguerButton.click();
+			waitLoad(2);
+			System.out.println("GETTEXT(): " + hamburguerOptions.getText());
+			logger.log(Status.INFO, "Verify if Hambuger Options is displayed");
+			Assert.assertTrue(hamburguerOptions.isDisplayed());
+			logger.log(Status.INFO, "Hamburger Options Exists and is Displayed");
+			logger.log(Status.INFO, "Getting Categories and Sub Categories from Hamburger Menu");
+			String[] hamburgerOptionsList = hamburguerOptions.getText().split("\n");
+			String key = null;
+			List<String> categoryOptions = new ArrayList<String>();
 
-			if(hamburgerOptionsList[i].equalsIgnoreCase("Tendencias")
-					||hamburgerOptionsList[i].equalsIgnoreCase("Contenido y dispositivos digitales")
-					||hamburgerOptionsList[i].equalsIgnoreCase("Buscar por categoría")
-					||hamburgerOptionsList[i].equalsIgnoreCase("Programas y características")
-					||hamburgerOptionsList[i].equalsIgnoreCase("Ayuda y configuración")) {
-				categoriesAndOptions.put(key, categoryOptions);
-				categoryOptions = new ArrayList<String>();
-				key = hamburgerOptionsList[i];
-			}else {
-				categoryOptions.add(hamburgerOptionsList[i]);
+			categoriesAndOptions = new HashMap<String, List<String>>();
+			for (int i = 0; i < hamburgerOptionsList.length - 1; i++) {
+
+				if (hamburgerOptionsList[i].equalsIgnoreCase("Tendencias")
+						|| hamburgerOptionsList[i].equalsIgnoreCase("Contenido y dispositivos digitales")
+						|| hamburgerOptionsList[i].equalsIgnoreCase("Buscar por categoría")
+						|| hamburgerOptionsList[i].equalsIgnoreCase("Programas y características")
+						|| hamburgerOptionsList[i].equalsIgnoreCase("Ayuda y configuración")) {
+					categoriesAndOptions.put(key, categoryOptions);
+					categoryOptions = new ArrayList<String>();
+					key = hamburgerOptionsList[i];
+				} else {
+					categoryOptions.add(hamburgerOptionsList[i]);
+				}
 			}
-		}
 			categoriesAndOptions.remove(null);
 			logger.log(Status.PASS, "Created Map of Categories And Subcategories, the map is: " + categoriesAndOptions);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			reportFail(e.getMessage());
 		}
-		
+
 		return categoriesAndOptions;
 	}
 	
@@ -100,11 +104,11 @@ public class TopMenuClass extends BasePage {
 			logger.log(Status.PASS, "Created Actual Map of specific Category: " + actualCategoryAndOptions);
 			
 			logger.log(Status.INFO, "Checking Actual Category Map and Expected Category Map");
-			Assert.assertTrue(actualCategoryAndOptions.equals(expectedCategoryAndOptions));
+			Assert.assertEquals(actualCategoryAndOptions, expectedCategoryAndOptions);
 			logger.log(Status.PASS, "The Actual Category Map is: '"+actualCategoryAndOptions+"'"+"\n"
 					+"and the Expected Catergory Map is: '" + expectedCategoryAndOptions+ "'");
 			
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			reportFail(e.getMessage());
 		}
 	}

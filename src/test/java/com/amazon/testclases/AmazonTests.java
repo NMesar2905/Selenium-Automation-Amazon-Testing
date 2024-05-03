@@ -64,7 +64,7 @@ public class AmazonTests extends BaseTest {
 		topMenu = homePage.getTopMenu();
 		Map<String,List<String>> categoriesAndOptions = topMenu.getHamburguerOptions();
 		
-		String buscarPorCategoriaJSONPath = prop.getProperty("BurcarPorCategoriaJSONPath").replace("${user.dir}", System.getProperty("user.dir"));
+		String buscarPorCategoriaJSONPath = prop.getProperty("BurcarPorCategoriaJSONPathERROR").replace("${user.dir}", System.getProperty("user.dir"));
 		topMenu.verifyCategoryAndOptions(new File(buscarPorCategoriaJSONPath), categoriesAndOptions);
 		
 		String programasYCaracteristicasJSONPath = prop.getProperty("ProgramasYCaracteristicasJSONPath").replace("${user.dir}", System.getProperty("user.dir"));
